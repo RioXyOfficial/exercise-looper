@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ExerciseLooper</title>
+  <link rel="stylesheet" media="all" href="/assets/application-e361a13b57bec6b1bc6fea43b0400f8127b0a85379744dbede7e758ecee45ab6.css">
+</head>
+
+<body>
+<header class="heading results">
+  <section class="container">
+    <a href="/">
+      <img src="/assets/logo-84d7d70645fbe179ce04c983a5fae1e6cba523d7cd28e0cd49a04707ccbef56e.png">
+    </a>
+
+    <span class="exercise-label">
+      Exercise:
+      <a href="/exercises/<%= questionnaire_id %>/results">
+        <%= ERB::Util.html_escape(results[:title].to_s) %>
+      </a>
+    </span>
+  </section>
+</header>
+
+<main class="container">
+  <% title = attempt[:created_at] ? attempt[:created_at].strftime("%Y-%m-%d %H:%M:%S") : "Take ##{attempt[:id]}" %>
+
+  <h1><%= title %></h1>
+
+  <dl class="answer">
+    <% results[:questions].each do |question| %>
+      <dt>
+        <%= ERB::Util.html_escape(question[:text].to_s) %>
+      </dt>
+
+      <dd>
+        <%= ERB::Util.html_escape(attempt[:answers][question[:id]].to_s) %>
+      </dd>
+    <% end %>
+  </dl>
+</main>
+</body>
+</html>

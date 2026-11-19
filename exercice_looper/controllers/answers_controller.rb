@@ -113,6 +113,25 @@ class AnswersController < BaseController
     view("exercises/results/result", data: { questionnaire_id: id, results: results })
   end
 
+  def show_submission
+    id = questionnaire_id
+    results = @answers_service.find_answers_by_questionnaire_id(id)
+
+    return view("404", code: 404) unless results
+
+    attempt = results[:attempts].find do |item|
+      item[:id].to_s == submission_id.to_s
+    end
+
+    return view("404", code: 404) unless attempt
+
+    view("exercises/results/submission", data: {
+      questionnaire_id: id,
+      results: results,
+      attempt: attempt
+    })
+  end
+
   private
 
   def questionnaire_id

@@ -54,7 +54,7 @@
     <% results[:attempts].each do |attempt| %>
       <tr>
         <td>
-          <a href="/test">
+          <a href="/exercises/<%= questionnaire_id %>/fulfillments/<%= attempt[:id] %>">
             <% if attempt[:created_at] %>
               <%= attempt[:created_at].strftime("%Y-%m-%d %H:%M:%S") %>
             <% else %>

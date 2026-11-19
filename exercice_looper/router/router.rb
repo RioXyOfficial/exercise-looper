@@ -22,7 +22,8 @@ class Router
       DynamicRoute.new("/exercises/:id/fulfillments/new", "GET", AnswersController, "new"),
       DynamicRoute.new("/exercises/:id/fulfillments", "POST", AnswersController, "create"),
       DynamicRoute.new("/exercises/:id/fulfillments/:submission_id/edit", "GET", AnswersController, "edit"),
-      DynamicRoute.new("/exercises/:id/fulfillments/:submission_id", "PUT", AnswersController, "update")
+      DynamicRoute.new("/exercises/:id/fulfillments/:submission_id", "PUT", AnswersController, "update"),
+      DynamicRoute.new("/exercises/:id/fulfillments/:submission_id", "GET", AnswersController, "show_submission"),
     ]
   end
 
