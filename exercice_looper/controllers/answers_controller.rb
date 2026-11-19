@@ -102,6 +102,17 @@ class AnswersController < BaseController
     [400, { "content-type" => "text/plain" }, ["Invalid answers"]]
   end
 
+  def list_questionnaire_answers
+    id = questionnaire_id
+    results = @answers_service.find_answers_by_questionnaire_id(id)
+
+    unless results
+      return [404, { "content-type" => "text/plain" }, ["Questionnaire not found"]]
+    end
+
+    view("exercises/results/result", data: { questionnaire_id: id, results: results })
+  end
+
   private
 
   def questionnaire_id

@@ -44,6 +44,19 @@ class AnswerRepository
     statement.execute(submission_id, questionnaire_id).to_a
   end
 
+  def find_answers_by_questionnaire(questionnaire_id)
+    statement = @db.prepare(
+      "SELECT form.title, q.question_id, q.question_text, a.submission_id,  a.answer_text,  a.created_at
+     FROM questionnaires form
+     LEFT JOIN questions q ON q.questionnaire_id = form.questionnaire_id
+     LEFT JOIN answers a ON a.question_id = q.question_id
+     WHERE form.questionnaire_id = ?
+     ORDER BY a.submission_id, q.question_id"
+    )
+
+    statement.execute(questionnaire_id).to_a
+  end
+
   def update_submission(submission_id, questions, answers)
     @db.query("START TRANSACTION")
 

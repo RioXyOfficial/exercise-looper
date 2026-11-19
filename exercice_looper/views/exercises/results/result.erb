@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Exercise results</title>
+
+  <link
+    rel="stylesheet"
+    href="/assets/application-e361a13b57bec6b1bc6fea43b0400f8127b0a85379744dbede7e758ecee45ab6.css"
+  >
+</head>
+
+<body>
+<header class="heading results">
+  <section class="container">
+    <a href="/">
+      <img
+        src="/assets/logo-84d7d70645fbe179ce04c983a5fae1e6cba523d7cd28e0cd49a04707ccbef56e.png"
+        alt="ExerciseLooper"
+      >
+    </a>
+
+    <span class="exercise-label">
+        Exercise:
+        <b><%= ERB::Util.html_escape(results[:title].to_s) %></b>
+      </span>
+  </section>
+</header>
+
+<main class="container">
+  <table>
+    <thead>
+    <tr>
+      <th scope="col">Take</th>
+
+      <% results[:questions].each do |question| %>
+        <th scope="col">
+          <%= ERB::Util.html_escape(question[:text].to_s) %>
+        </th>
+      <% end %>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% if results[:attempts].empty? %>
+      <tr>
+        <td colspan="<%= results[:questions].length + 1 %>">
+          Aucun essai.
+        </td>
+      </tr>
+    <% end %>
+
+    <% results[:attempts].each do |attempt| %>
+      <tr>
+        <td>
+          <a href="/test">
+            <% if attempt[:created_at] %>
+              <%= attempt[:created_at].strftime("%Y-%m-%d %H:%M:%S") %>
+            <% else %>
+              Attempt #<%= attempt[:id] %>
+            <% end %>
+          </a>
+        </td>
+
+        <% results[:questions].each do |question| %>
+          <% answer = attempt[:answers][question[:id]] %>
+          <% answered = !answer.to_s.strip.empty? %>
+
+          <td class="answer">
+            <% if answered %>
+              <i
+                class="fa fa-check short"
+                role="img"
+                aria-label="Answered"
+              ></i>
+            <% else %>
+              <i
+                class="fa fa-times empty"
+                role="img"
+                aria-label="Unanswered"
+              ></i>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</main>
+</body>
+</html>

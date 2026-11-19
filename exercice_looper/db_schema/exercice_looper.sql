@@ -37,19 +37,22 @@ CREATE TABLE questions
 );
 
 CREATE TABLE answers (
-                         answer_id INT AUTO_INCREMENT,
-                         submission_id INT,
-                         question_id INT NOT NULL,
-                         answer_text TEXT,
+     answer_id INT AUTO_INCREMENT,
+     submission_id INT,
+     question_id INT NOT NULL,
+     answer_text TEXT,
 
-                         CONSTRAINT pk_answers
-                             PRIMARY KEY (answer_id),
+     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+         ON UPDATE CURRENT_TIMESTAMP,
 
-                         CONSTRAINT uq_answers_submission_question
-                             UNIQUE (submission_id, question_id),
+     CONSTRAINT pk_answers PRIMARY KEY (answer_id),
 
-                         CONSTRAINT fk_answers_question
-                             FOREIGN KEY (question_id)
-                                 REFERENCES questions(question_id)
-                                 ON DELETE CASCADE
+     CONSTRAINT uq_answers_submission_question
+         UNIQUE (submission_id, question_id),
+
+     CONSTRAINT fk_answers_question
+         FOREIGN KEY (question_id)
+             REFERENCES questions(question_id)
+             ON DELETE CASCADE
 );
