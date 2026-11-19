@@ -33,10 +33,12 @@
     <thead>
     <tr>
       <th scope="col">Take</th>
-
+      
       <% results[:questions].each do |question| %>
         <th scope="col">
-          <%= ERB::Util.html_escape(question[:text].to_s) %>
+          <a href="/exercises/<%= questionnaire_id %>/results/<%= question[:id] %>">
+            <%= ERB::Util.html_escape(question[:text].to_s) %>
+          </a>
         </th>
       <% end %>
     </tr>

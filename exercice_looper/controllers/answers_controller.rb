@@ -132,6 +132,27 @@ class AnswersController < BaseController
     })
   end
 
+  def show_question_answers
+    id = questionnaire_id
+    question_id = @request.path_info.split("/")[4]
+
+    results = @answers_service.find_answers_by_questionnaire_id(id)
+
+    return view("404", code: 404) unless results
+
+    question = results[:questions].find do |item|
+      item[:id].to_s == question_id.to_s
+    end
+
+    return view("404", code: 404) unless question
+
+    view("exercises/results/question", data: {
+      questionnaire_id: id,
+      results: results,
+      question: question
+    })
+  end
+
   private
 
   def questionnaire_id
