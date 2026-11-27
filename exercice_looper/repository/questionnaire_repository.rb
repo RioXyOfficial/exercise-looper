@@ -37,4 +37,9 @@ class QuestionnaireRepository
     statement = @db.prepare("UPDATE questionnaires SET status = ? WHERE questionnaire_id = ?")
     statement.execute(status, questionnaire_id)
   end
+
+  def delete(questionnaire_id)
+    statement = @db.prepare("DELETE FROM questionnaires WHERE questionnaire_id = ? AND status IN ('editing', 'closed')")
+    statement.execute(questionnaire_id)
+  end
 end

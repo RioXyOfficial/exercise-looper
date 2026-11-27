@@ -51,6 +51,12 @@ class QuestionnairesController < BaseController
     redirect("/exercises")
   end
 
+  def delete
+    questionnaire_id = current_questionnaire_id
+    @questionnaires_service.delete_questionnaire(questionnaire_id)
+    redirect("/exercises")
+  end
+
   def current_questionnaire_id
     @request.path_info.split("/")[2]
   end
