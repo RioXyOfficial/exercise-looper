@@ -1,5 +1,7 @@
+require_relative "../db/database"
+
 class AnswerRepository
-  def initialize(db_connection)
+  def initialize(db_connection = Database.connection)
     @db = db_connection
   end
 

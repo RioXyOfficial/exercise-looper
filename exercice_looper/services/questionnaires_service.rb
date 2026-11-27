@@ -22,4 +22,8 @@ class QuestionnairesService
   def fetch_questionnaire_by_questionnaire_id(questionnaire_id)
     @questionnaire_repository.find_by_id(questionnaire_id)
   end
+
+  def delete_questionnaire(questionnaire_id)
+    @questionnaire_repository.delete(questionnaire_id)
+  end
 end

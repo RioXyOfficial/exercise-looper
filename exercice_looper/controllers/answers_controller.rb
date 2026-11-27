@@ -1,5 +1,4 @@
 require_relative "base_controller"
-require_relative "../db/database"
 require_relative "../repository/questionnaire_repository"
 require_relative "../repository/question_repository"
 require_relative "../repository/answer_repository"
@@ -10,19 +9,9 @@ require_relative "../services/answers_service"
 class AnswersController < BaseController
   def initialize(request)
     @request = request
-    db_connection = Database.connection
-
-    @questionnaires_service = QuestionnairesService.new(
-      QuestionnaireRepository.new(db_connection)
-    )
-
-    @questions_service = QuestionsService.new(
-      QuestionRepository.new(db_connection)
-    )
-
-    @answers_service = AnswersService.new(
-      AnswerRepository.new(db_connection)
-    )
+    @questionnaires_service = QuestionnairesService.new(QuestionnaireRepository.new)
+    @questions_service = QuestionsService.new(QuestionRepository.new)
+    @answers_service = AnswersService.new(AnswerRepository.new)
   end
 
   def index
