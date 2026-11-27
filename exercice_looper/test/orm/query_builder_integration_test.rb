@@ -16,16 +16,20 @@ class QueryBuilderIntegrationTest < Minitest::Test
 
     expected_text = "What's Ruby?"
     insert_query = QueryBuilder.insert("orm_insert_test", { question_text: expected_text })
-    Database.execute(*insert_query)
+    write_result = Database.execute_write(*insert_query)
 
     rows = Database.execute("SELECT question_id, question_text FROM orm_insert_test")
 
-    puts "\nExpected question text  #{expected_text.inspect}"
-    puts "Rows stored in MariaDB  #{rows.inspect}"
+    puts "\nWrite result  #{write_result.inspect}"
+    puts "Rows stored   #{rows.inspect}"
 
     assert_equal 1, rows.size
-    assert_equal expected_text, rows.first.fetch("question_text")
-    assert_operator rows.first.fetch("question_id"), :>, 0
+
+    row = rows.first
+    assert_equal expected_text, row.fetch("question_text")
+    assert_operator row.fetch("question_id"), :>, 0
+    assert_equal 1, write_result.fetch(:affected_rows)
+    assert_equal row.fetch("question_id"), write_result.fetch(:last_id)
   ensure
     Database.execute("DROP TEMPORARY TABLE orm_insert_test") if table_created
   end

@@ -3,7 +3,7 @@
 class Questionnaire
   TABLE_NAME = "questionnaires"
   PRIMARY_KEY = :questionnaire_id
-  COLUMNS = %i[questionnaire_id title status].freeze
+  COLUMNS = [:questionnaire_id, :title, :status].freeze
 
   attr_accessor :questionnaire_id, :title, :status
 
