@@ -70,12 +70,18 @@
           <% answered = !answer.to_s.strip.empty? %>
 
           <td class="answer">
-            <% if answered %>
+            <% if answered && answer.length < 10%>
               <i
                 class="fa fa-check short"
                 role="img"
                 aria-label="Answered"
               ></i>
+              <% elsif answered && answer.length >= 10%>
+                <i
+                  class="fa fa-check-double filled"
+                  role="img"
+                  aria-label="Answered"
+                ></i>
             <% else %>
               <i
                 class="fa fa-times empty"
